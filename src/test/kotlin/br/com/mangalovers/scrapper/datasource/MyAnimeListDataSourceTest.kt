@@ -32,7 +32,7 @@ internal class MyAnimeListDataSourceTest {
     @Test
     fun `getComicsFromRemotePage() should return a collection of Comic`() = runTest {
         // arrange
-        val expected = 8
+        val expected = 4
         val page = "http://localhost:8081/comics?page=1"
         with(server) {
             enqueue(

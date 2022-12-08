@@ -5,1136 +5,378 @@
 <div id="myanimelist">
     <div class="wrapper ">
         <div id="headerSmall" class="">
-
-        <div id="menu" class="">
-            <div id="menu_right">
-                <script type="text/x-template" id="incremental-result-item-anime">
-                    <div class="list anime" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info anime">
-                                <div class="name">${ item.name } <span
-                                        class="media-type">(${ item.payload.media_type })</span></div>
-                                <div class="extra-info">Aired: ${ item.payload.aired }<br>Score: ${ item.payload.score }<br>Status:
-                                    ${ item.payload.status }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info anime">
-                                <div class="name">${ item.name }</div>
-                                <div class="media-type">(${ mediaTypeWithStartYear })</div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-manga">
-                    <div class="list manga" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info manga">
-                                <div class="name">${ item.name } <span
-                                        class="media-type">(${ item.payload.media_type })</span></div>
-                                <div class="extra-info">Published: ${ item.payload.published }<br>Score: ${
-                                    item.payload.score }<br>Status: ${ item.payload.status }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info manga">
-                                <div class="name">${ item.name }</div>
-                                <div class="media-type">(${ mediaTypeWithStartYear })</div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-character">
-                    <div class="list character" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info character">
-                                <div class="name" v-html="item.name"></div>
-                                <div class="extra-info">
-                                    <ul class="related-works">
-                                        <li v-for="work in item.payload.related_works" class="fs-i">- ${ work }</li>
-                                    </ul>
-                                    Favorites: ${ item.payload.favorites }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info character">
-                                <div class="name" v-html="item.name"></div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-person">
-                    <div class="list person" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info person">
-                                <div class="name">${ item.name }</div>
-                                <div class="extra-info"><span v-if="item.payload.alternative_name">${ item.payload.alternative_name }<br></span>Birthday:
-                                    ${ item.payload.birthday }<br>Favorites: ${ item.payload.favorites }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info person">
-                                <div class="name">${ item.name }</div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-company">
-                    <div class="list company" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info company">
-                                <div class="name">${ item.name }</div>
-                                <div class="extra-info"><span
-                                        v-if="item.payload.japanese">(${ item.payload.japanese })<br></span>
-                                    Anime titles: ${ item.payload.num_animes.toLocaleString() }<br>
-                                    Favorites: ${item.payload.favorites.toLocaleString()}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info company">
-                                <div class="name">${ item.name }</div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-store">
-                    <div class="list store" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info store"></div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info store"></div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-club">
-                    <div class="list club" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info club">
-                                <div class="name">${ item.name }</div>
-                                <div class="extra-info">Members: ${ item.payload.members }<br>Category: ${
-                                    item.payload.category }<br>Created by: ${ item.payload.created_by }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info club">
-                                <div class="name">${ item.name }</div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-user">
-                    <div class="list user" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info user">
-                                <div class="name">${ item.name }</div>
-                                <div class="extra-info"><span
-                                        v-if="item.payload.authority">${ item.payload.authority }<br></span>Joined: ${
-                                    item.payload.joined }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info user">
-                                <div class="name">${ item.name }</div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-news">
-                    <div class="list news" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info news">
-                                <div class="name">${ item.name }</div>
-                                <div class="extra-info">${ item.payload.date }</div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info news">
-                                <div class="name">${ item.name }</div>
-                                <div class="media-type">${ item.payload.date }</div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-featured">
-                    <div class="list featured" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info featured">
-                                <div class="name">${ item.name }</div>
-                                <div class="extra-info">${ item.payload.date }</div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info featured">
-                                <div class="name">${ item.name }</div>
-                                <div class="media-type">${ item.payload.date }</div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-forum">
-                    <div class="list forum" :class="{'focus': focus}"><a :href="url" class="clearfix">
-                        <div class="on" v-if="focus"><span class="image"
-                                                           :style="{'background-image': 'url(' + item.image_url + ')'}"></span>
-                            <div class="info forum">
-                                <div class="name"><span v-show="item.payload.work_title">${ item.payload.work_title}
-                      <i class="fa-solid fa-caret-right"></i></span> ${ item.name }
-                                </div>
-                                <div class="extra-info">${ item.payload.date
-                                    }<br><span>in ${ item.payload.category }</span></div>
-                            </div>
-                        </div>
-                        <div class="off" v-if="!focus"><span class="image"
-                                                             :style="{'background-image': 'url(' + item.thumbnail_url + ')'}"></span>
-                            <div class="info forum">
-                                <div class="name"><span v-show="item.payload.work_title">${ item.payload.work_title}
-                      <i class="fa-solid fa-caret-right"></i></span> ${ item.name }
-                                </div>
-                                <div class="media-type">${ item.payload.date }</div>
-                            </div>
-                        </div>
-                    </a></div></script>
-                <script type="text/x-template" id="incremental-result-item-separator">
-                    <div class="list separator">
-                        <div class="separator"><span v-show="item.name == 'anime'">Anime</span><span
-                                v-show="item.name == 'manga'">Manga</span><span v-show="item.name == 'character'">Characters</span><span
-                                v-show="item.name == 'person'">People</span><span v-show="item.name == 'company'">Companies</span>
-                        </div>
-                    </div></script>
-                <div id="top-search-bar">
-                    <form id="searchBar" method="get" class="searchBar" @submit.prevent="jump()">
-                        <div class="form-select-outer fl-l"><select name="type" id="topSearchValue" class="inputtext"
-                                                                    v-model="type">
-                            <option value="all">All</option>
-                            <option value="anime">Anime</option>
-                            <option value="manga">Manga</option>
-                            <option value="character">Characters</option>
-                            <option value="person">People</option>
-                            <option value="company">Companies</option>
-                            <option value="store">Manga Store</option>
-                            <option value="news">News</option>
-                            <option value="featured">Featured Articles</option>
-                            <option value="forum">Forum</option>
-                            <option value="club">Clubs</option>
-                            <option value="user">Users</option>
-                        </select></div>
-                        <input v-model="keyword" id="topSearchText" type="text" name="keyword" class="inputtext fl-l"
-                               placeholder="Search Anime, Manga, and more..." size="30" autocomplete="off"
-                               @keydown.up.prevent="moveSelection(-1)" @keydown.down.prevent="moveSelection(1)"
-                               @focus="isFocused = true" @blur="isFocused = false">
-                        <button id="topSearchButon" class="fl-l" :class="{'notActive': (keyword.length < 3)}"
-                                type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
-                    <div id="topSearchResultList" class="incrementalSearchResultList"
-                         :style="{display: (showResult ? 'block' : 'none')}" @mousedown.prevent="">
-                        <div v-for="(item, i) in items" @mouseover="selection=i">
-                            <component :is="resolveComponent(item)" :item="item" :focus="selection == i"
-                                       :url="generateItemPageUrl(item)"></component>
-                        </div>
-                        <div class="list list-bottom" :class="{'focus': selection == -1}" @mouseover="selection = -1"
-                             :style="{display: (showViewAllLink ? 'block' : 'none')}"><a :href="resultPageUrl">
-                            View all results for <span class="fw-b">${ keyword }</span><i v-show="isRequesting"
-                                                                                          class="fa-solid fa-spinner fa-spin ml4"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="menu_left">
-            </div>
-        </div>
-        <div id="contentWrapper">
-            <div>
-                <h1 class="h1">Action Manga</h1></div>
-            <div id="content" class="pl0 pr0">
+            <div id="contentWrapper">
+                <div>
+                    <h1 class="h1">Action Manga</h1></div>
+                <div id="content" class="pl0 pr0">
 
 
-                <div class="breadcrumb ml12 mt4" itemscope="" itemtype="http://schema.org/BreadcrumbList">
-                    <div class="di-ib" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"><a
-                            href="https://myanimelist.net/" itemprop="item"><span itemprop="name">
-              Top
-                          </span></a>
-                        <meta itemprop="position" content="1">
-                    </div>&nbsp; &gt; &nbsp;<div class="di-ib" itemprop="itemListElement" itemscope=""
-                                                 itemtype="http://schema.org/ListItem"><a
-                        href="https://myanimelist.net/manga.php" itemprop="item"><span itemprop="name">
-              Manga
-                          </span></a>
-                    <meta itemprop="position" content="2">
-                </div>&nbsp; &gt; &nbsp;<div class="di-ib" itemprop="itemListElement" itemscope=""
-                                             itemtype="http://schema.org/ListItem"><a
-                        href="https://myanimelist.net/manga/genre/1/Action" itemprop="item"><span itemprop="name">
-              Action
-                          </span></a>
-                    <meta itemprop="position" content="3">
-                </div>
-                </div>
-
-
-                <div class="ml8 mr8">
-                    <div id="horiznav_nav" class="ac mt8 ml0 mr0">
-                        <ul>
-                            <li>
-                                <a href="https://myanimelist.net/manga.php?em=0&amp;ed=0&amp;ey=0&amp;o=2&amp;w=1&amp;c%5B0%5D=a&amp;c%5B1%5D=d&amp;cv=1&amp;genre%5B%5D=1&amp;sd=23&amp;sm=11&amp;sy=2022">Upcoming</a>
-                            </li>
-                            <li>
-                                <a href="https://myanimelist.net/manga.php?o=9&amp;c%5B0%5D=a&amp;c%5B1%5D=d&amp;cv=2&amp;genre%5B%5D=1">Just
-                                    Added</a>
-                            </li>
-                            <li>
-                                <a href="https://myanimelist.net/manga.php?letter=.&amp;genre%5B%5D=1">#</a>
-                            </li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=A&amp;genre%5B%5D=1">A</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=B&amp;genre%5B%5D=1">B</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=C&amp;genre%5B%5D=1">C</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=D&amp;genre%5B%5D=1">D</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=E&amp;genre%5B%5D=1">E</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=F&amp;genre%5B%5D=1">F</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=G&amp;genre%5B%5D=1">G</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=H&amp;genre%5B%5D=1">H</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=I&amp;genre%5B%5D=1">I</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=J&amp;genre%5B%5D=1">J</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=K&amp;genre%5B%5D=1">K</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=L&amp;genre%5B%5D=1">L</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=M&amp;genre%5B%5D=1">M</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=N&amp;genre%5B%5D=1">N</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=O&amp;genre%5B%5D=1">O</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=P&amp;genre%5B%5D=1">P</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=Q&amp;genre%5B%5D=1">Q</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=R&amp;genre%5B%5D=1">R</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=S&amp;genre%5B%5D=1">S</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=T&amp;genre%5B%5D=1">T</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=U&amp;genre%5B%5D=1">U</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=V&amp;genre%5B%5D=1">V</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=W&amp;genre%5B%5D=1">W</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=X&amp;genre%5B%5D=1">X</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=Y&amp;genre%5B%5D=1">Y</a></li>
-                            <li><a href="https://myanimelist.net/manga.php?letter=Z&amp;genre%5B%5D=1">Z</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="normal_header pt24 ml8 mr8 clearfix js-search-filter-block">
-                        <div class="view-style2"><a class="js-btn-view-style seasonal on" title="Seasonal View"
-                                                    id="seasonal"><i class="malicon malicon-seasonal-view"></i></a><a
-                                class="js-btn-view-style list" title="List View" id="list"><i
-                                class="malicon malicon-list-view"></i></a></div>
-                        <div class="fl-r di-ib mt4 mr12">
-                            <div class="fl-r po-r">
-                                <span class="fl-r btn-show-sort js-btn-show-sort sort fs11 fw-n" data-id="sort">Sorted by <span
-                                        class="js-text-sorted-by">Members</span></span>
-                                <div class="search-filter-sort-order-block sort js-search-filter-sort-order-block js-sort">
-                                    <span class="fl-r btn-close js-btn-close"><i class="fa-solid fa-times"></i></span>
-                                    <p class="badresult-text js-error-message"></p>
-                                    <p class="sort-order-list" id="sort"><span
-                                            class="js-btn-sort-order btn-sort-order circle selected" id="members">Members</span><br><span
-                                            class="js-btn-sort-order btn-sort-order circle"
-                                            id="score">Score</span><br><span
-                                            class="js-btn-sort-order btn-sort-order circle"
-                                            id="start_date">Newest</span><br><span
-                                            class="js-btn-sort-order btn-sort-order circle" id="title">Title</span><br>
-                                    </p>
-                                    <div class="ajax-loader loader-sort js-ajax-loader"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="di-ib mt4">Action Manga <span class="fw-n">(8,476)</span></span>
-                    </div>
-
-                    <div class="mt8 ml8 mr8">
-                        <p class="pt8 pr8 pb8 pl8 bg-color-base5">Exciting action sequences take priority and
-                            significant conflicts between characters are usually resolved with one's physical power.
-                            While the overarching plot may involve one group against another, the narrative in action
-                            stories is always focused on the strengths/weaknesses of individual characters and the
-                            effort they put into their personal battles with the opposing group's members.<br>
-                            <br>
-                            Contrast with Military or Sports where the narrative is on collective achievement, or
-                            monster-of-the-week where the brief action scenes are a predicted climax to the episode's
-                            plot.</p>
-                    </div>
-
-                    <div class="js-categories-seasonal js-block-list tile mt16">
-                        <div class="seasonal-anime-list">
-                            <div class="seasonal-anime js-seasonal-anime">
-                                <div>
-                                    <div class="title">
-                                        <div class="title-text">
-                                            <h2 class="h2_manga_title"><a
-                                                    href="https://myanimelist.net/manga/144484/Chou_Nankan_Dungeon_de_10-mannen_Shugyou_shita_Kekka_Sekai_Saikyou_ni__Saijaku_Munou_no_Gekokujou"
-                                                    class="link-title">Chou Nankan Dungeon de 10-mannen Shugyou shita
-                                                Kekka, Sekai Saikyou ni: Saijaku Munou no Gekokujou</a></h2></div>
-                                    </div>
-
-                                    <div class="prodsrc">
-                                        <div class="video"></div>
-                                        <div class="info">
-                                            <span class="item">Light Novel, 2022</span><span class="item publishing">Publishing</span><span
-                                                class="item">? vol, ? chp</span>
+                    <div class="ml8 mr8">
+                        <div class="js-categories-seasonal js-block-list tile mt16">
+                            <div class="seasonal-anime-list">
+                                <div class="seasonal-anime js-seasonal-anime">
+                                    <div>
+                                        <div class="title">
+                                            <div class="title-text">
+                                                <h2 class="h2_manga_title"><a
+                                                        href="https://myanimelist.net/manga/144484/Chou_Nankan_Dungeon_de_10-mannen_Shugyou_shita_Kekka_Sekai_Saikyou_ni__Saijaku_Munou_no_Gekokujou"
+                                                        class="link-title">Chou Nankan Dungeon de 10-mannen Shugyou
+                                                    shita
+                                                    Kekka, Sekai Saikyou ni: Saijaku Munou no Gekokujou</a></h2></div>
                                         </div>
-                                        <div class="broadcast"></div>
-                                    </div>
 
-                                    <div class="genres js-genre" id="144484">
-                                        <div class="genres-inner js-genre-inner"><span class="genre">
+                                        <div class="prodsrc">
+                                            <div class="video"></div>
+                                            <div class="info">
+                                                <span class="item">Light Novel, 2022</span><span
+                                                    class="item publishing">Publishing</span><span
+                                                    class="item">? vol, ? chp</span>
+                                            </div>
+                                            <div class="broadcast"></div>
+                                        </div>
+
+                                        <div class="genres js-genre" id="144484">
+                                            <div class="genres-inner js-genre-inner"><span class="genre">
             <a href="/manga/genre/1/Action" title="Action">Action</a>
           </span><span class="genre">
             <a href="/manga/genre/10/Fantasy" title="Fantasy">Fantasy</a>
           </span></div>
-                                    </div>
-                                </div>
-
-                                <div class="image">
-                                    <img width="167" height="242"
-                                         alt="Chou Nankan Dungeon de 10-mannen Shugyou shita Kekka, Sekai Saikyou ni: Saijaku Munou no Gekokujou"
-                                         data-src="https://cdn.myanimelist.net/r/167x242/images/manga/1/270011.webp?s=7e3108491539a9c634d1d1b2b936ac5a"
-                                         data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/1/270011.webp?s=7e3108491539a9c634d1d1b2b936ac5a 1x, https://cdn.myanimelist.net/r/334x484/images/manga/1/270011.webp?s=161847408bb0d079aad08b1f887ba309 2x"
-                                         class=" lazyloaded"
-                                         srcset="https://cdn.myanimelist.net/r/167x242/images/manga/1/270011.webp?s=7e3108491539a9c634d1d1b2b936ac5a 1x, https://cdn.myanimelist.net/r/334x484/images/manga/1/270011.webp?s=161847408bb0d079aad08b1f887ba309 2x"
-                                         src="https://cdn.myanimelist.net/r/167x242/images/manga/1/270011.webp?s=7e3108491539a9c634d1d1b2b936ac5a">
-                                    <a href="https://myanimelist.net/manga/144484/Chou_Nankan_Dungeon_de_10-mannen_Shugyou_shita_Kekka_Sekai_Saikyou_ni__Saijaku_Munou_no_Gekokujou"
-                                       class="link-image">Chou Nankan Dungeon de 10-mannen Shugyou shita Kekka, Sekai
-                                        Saikyou ni: Saijaku Munou no Gekokujou</a>
-                                </div>
-
-                                <div class="synopsis js-synopsis">
-                                    <p class="preline">"The Most Incompetent in This World"—it was the gift Kai Heineman
-                                        received from the Divine Oracle when he was thirteen years old. Due to that
-                                        gift, his physical abilities plummeted. His growth rate became the lowest in the
-                                        world. Yes, the gift was supposed to make him a target of everyone's mockery and
-                                        pity. However, this gift had something that no other gift had, limitless growth.
-
-                                        Moreover, by chains of unfortunate coincidence, Kai Heineman ended up being
-                                        trapped in the worst, nightmarish dungeon. The dungeon disconnected him from the
-                                        passage of time in the outside world. This allowed him to train for a really
-                                        long time while just a moment passed in the outside world, without ageing even a
-                                        single day. This chain of misfortunate events led to the birth of the most
-                                        powerful supreme being in the world.
-
-                                        This is the tale of the loner, whose common sense got so distorted after he
-                                        spent too much time talking with his own sword that he brought out the
-                                        subordinates he had subjugated in the dungeon to wreak havoc in the outside
-                                        world.
-
-                                        (Source: Shousetsuka ni Narou, translated)</p>
-                                    <button class="js-toggle-text"
-                                            style="display: block; margin: 0 auto; background: none; border: none;">
-                                        <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
-                                    </button>
-
-                                    <div class="properties">
-                                        <div class="property">
-                                            <span class="caption">Authors</span><span class="item"><a
-                                                href="/people/22325/Lia_Luna">Luna, Lia</a></span><span class="item"><a
-                                                href="/people/54907/Rikisui">Rikisui</a></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="information ">
-                                    <div class="information-item scormem">
-                                        <div class="scormem-container">
-                                            <div class="scormem-item score" title="Score">
-                                                <i class="fa-regular fa-star mr4"></i>N/A
-                                            </div>
-                                            <div class="scormem-item member" title="Members">
-                                                <i class="fa-solid fa-user mr4"></i>12
-                                            </div>
                                         </div>
                                     </div>
-                                    <div class="information-item buttons">
-                                        <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
-                                           title="Quick add manga to my list"
-                                           class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
-                                                class="ga-click" data-ga-click-type="list-add-button"
-                                                data-ga-click-param="mid:144484"
-                                                style="line-height: unset;">Add to List</span></a>
-                                    </div>
-                                </div>
 
-                            </div>
-                            <div class="seasonal-anime js-seasonal-anime">
-                                <div>
-                                    <div class="title">
-                                        <div class="title-text">
-                                            <h2 class="h2_manga_title"><a
-                                                    href="https://myanimelist.net/manga/104953/Daibanchou"
-                                                    class="link-title">Daibanchou</a></h2></div>
+                                    <div class="image">
+                                        <img width="167" height="242"
+                                             alt="Chou Nankan Dungeon de 10-mannen Shugyou shita Kekka, Sekai Saikyou ni: Saijaku Munou no Gekokujou"
+                                             data-src="https://cdn.myanimelist.net/r/167x242/images/manga/1/270011.webp?s=7e3108491539a9c634d1d1b2b936ac5a"
+                                             data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/1/270011.webp?s=7e3108491539a9c634d1d1b2b936ac5a 1x, https://cdn.myanimelist.net/r/334x484/images/manga/1/270011.webp?s=161847408bb0d079aad08b1f887ba309 2x"
+                                             class=" lazyloaded"
+                                             srcset="https://cdn.myanimelist.net/r/167x242/images/manga/1/270011.webp?s=7e3108491539a9c634d1d1b2b936ac5a 1x, https://cdn.myanimelist.net/r/334x484/images/manga/1/270011.webp?s=161847408bb0d079aad08b1f887ba309 2x"
+                                             src="https://cdn.myanimelist.net/r/167x242/images/manga/1/270011.webp?s=7e3108491539a9c634d1d1b2b936ac5a">
+                                        <a href="https://myanimelist.net/manga/144484/Chou_Nankan_Dungeon_de_10-mannen_Shugyou_shita_Kekka_Sekai_Saikyou_ni__Saijaku_Munou_no_Gekokujou"
+                                           class="link-image">Chou Nankan Dungeon de 10-mannen Shugyou shita Kekka,
+                                            Sekai
+                                            Saikyou ni: Saijaku Munou no Gekokujou</a>
                                     </div>
 
-                                    <div class="prodsrc">
-                                        <div class="video"></div>
-                                        <div class="info">
-                                            <span class="item">Light Novel, 2004</span><span class="item finished">Finished</span><span
-                                                class="item">2 vol, ? chp</span>
+                                    <div class="synopsis js-synopsis">
+                                        <p class="preline">"The Most Incompetent in This World"—it was the gift Kai
+                                            Heineman
+                                            received from the Divine Oracle when he was thirteen years old. Due to that
+                                            gift, his physical abilities plummeted. His growth rate became the lowest in
+                                            the
+                                            world. Yes, the gift was supposed to make him a target of everyone's mockery
+                                            and
+                                            pity. However, this gift had something that no other gift had, limitless
+                                            growth.
+
+                                            Moreover, by chains of unfortunate coincidence, Kai Heineman ended up being
+                                            trapped in the worst, nightmarish dungeon. The dungeon disconnected him from
+                                            the
+                                            passage of time in the outside world. This allowed him to train for a really
+                                            long time while just a moment passed in the outside world, without ageing
+                                            even a
+                                            single day. This chain of misfortunate events led to the birth of the most
+                                            powerful supreme being in the world.
+
+                                            This is the tale of the loner, whose common sense got so distorted after he
+                                            spent too much time talking with his own sword that he brought out the
+                                            subordinates he had subjugated in the dungeon to wreak havoc in the outside
+                                            world.
+
+                                            (Source: Shousetsuka ni Narou, translated)</p>
+                                        <button class="js-toggle-text"
+                                                style="display: block; margin: 0 auto; background: none; border: none;">
+                                            <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
+                                        </button>
+
+                                        <div class="properties">
+                                            <div class="property">
+                                                <span class="caption">Authors</span><span class="item"><a
+                                                    href="/people/22325/Lia_Luna">Luna, Lia</a></span><span
+                                                    class="item"><a
+                                                    href="/people/54907/Rikisui">Rikisui</a></span></div>
                                         </div>
-                                        <div class="broadcast"></div>
                                     </div>
 
-                                    <div class="genres js-genre" id="104953">
-                                        <div class="genres-inner js-genre-inner"><span class="genre">
+                                    <div class="information ">
+                                        <div class="information-item scormem">
+                                            <div class="scormem-container">
+                                                <div class="scormem-item score" title="Score">
+                                                    <i class="fa-regular fa-star mr4"></i>N/A
+                                                </div>
+                                                <div class="scormem-item member" title="Members">
+                                                    <i class="fa-solid fa-user mr4"></i>12
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="information-item buttons">
+                                            <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
+                                               title="Quick add manga to my list"
+                                               class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
+                                                    class="ga-click" data-ga-click-type="list-add-button"
+                                                    data-ga-click-param="mid:144484"
+                                                    style="line-height: unset;">Add to List</span></a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="seasonal-anime js-seasonal-anime">
+                                    <div>
+                                        <div class="title">
+                                            <div class="title-text">
+                                                <h2 class="h2_manga_title"><a
+                                                        href="https://myanimelist.net/manga/104953/Daibanchou"
+                                                        class="link-title">Daibanchou</a></h2></div>
+                                        </div>
+
+                                        <div class="prodsrc">
+                                            <div class="video"></div>
+                                            <div class="info">
+                                                <span class="item">Light Novel, 2004</span><span class="item finished">Finished</span><span
+                                                    class="item">2 vol, ? chp</span>
+                                            </div>
+                                            <div class="broadcast"></div>
+                                        </div>
+
+                                        <div class="genres js-genre" id="104953">
+                                            <div class="genres-inner js-genre-inner"><span class="genre">
             <a href="/manga/genre/1/Action" title="Action">Action</a>
           </span><span class="genre">
             <a href="/manga/genre/10/Fantasy" title="Fantasy">Fantasy</a>
           </span></div>
-                                    </div>
-                                </div>
-
-                                <div class="image">
-                                    <img width="167" height="242" alt="Daibanchou"
-                                         data-src="https://cdn.myanimelist.net/r/167x242/images/manga/3/259008.webp?s=f3b6549c6a609136c6dfd177d6c8b138"
-                                         data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/3/259008.webp?s=f3b6549c6a609136c6dfd177d6c8b138 1x, https://cdn.myanimelist.net/r/334x484/images/manga/3/259008.webp?s=a05d1053884cc07e910195d5696c0bae 2x"
-                                         class=" lazyloaded"
-                                         srcset="https://cdn.myanimelist.net/r/167x242/images/manga/3/259008.webp?s=f3b6549c6a609136c6dfd177d6c8b138 1x, https://cdn.myanimelist.net/r/334x484/images/manga/3/259008.webp?s=a05d1053884cc07e910195d5696c0bae 2x"
-                                         src="https://cdn.myanimelist.net/r/167x242/images/manga/3/259008.webp?s=f3b6549c6a609136c6dfd177d6c8b138">
-                                    <a href="https://myanimelist.net/manga/104953/Daibanchou" class="link-image">Daibanchou</a>
-                                </div>
-
-                                <div class="synopsis js-synopsis">
-                                    <p class="preline">Adaptation of the eroge by Alicesoft.</p>
-                                    <button class="js-toggle-text"
-                                            style="display: block; margin: 0 auto; background: none; border: none;">
-                                        <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
-                                    </button>
-
-                                    <div class="properties">
-                                        <div class="property">
-                                            <span class="caption">Authors</span><span class="item"><a
-                                                href="/people/23851/Risa_Ebata">Ebata, Risa</a></span><span
-                                                class="item"><a href="/people/26897/AliceSoft">AliceSoft</a></span><span
-                                                class="item"><a
-                                                href="/people/57645/Akikazu_Itou">Itou, Akikazu</a></span></div>
-                                        <div class="property">
-                                            <span class="caption">Theme</span><span class="item"><a
-                                                href="/manga/genre/23/School" title="School">School</a></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="information ">
-                                    <div class="information-item scormem">
-                                        <div class="scormem-container">
-                                            <div class="scormem-item score" title="Score">
-                                                <i class="fa-regular fa-star mr4"></i>N/A
-                                            </div>
-                                            <div class="scormem-item member" title="Members">
-                                                <i class="fa-solid fa-user mr4"></i>12
-                                            </div>
                                         </div>
                                     </div>
-                                    <div class="information-item buttons">
-                                        <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
-                                           title="Quick add manga to my list"
-                                           class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
-                                                class="ga-click" data-ga-click-type="list-add-button"
-                                                data-ga-click-param="mid:104953"
-                                                style="line-height: unset;">Add to List</span></a>
-                                    </div>
-                                </div>
 
-                            </div>
-                            <div class="seasonal-anime js-seasonal-anime">
-                                <div>
-                                    <div class="title">
-                                        <div class="title-text">
-                                            <h2 class="h2_manga_title"><a
-                                                    href="https://myanimelist.net/manga/153972/Dimensional_Mercenary"
-                                                    class="link-title">Dimensional Mercenary</a></h2></div>
+                                    <div class="image">
+                                        <img width="167" height="242" alt="Daibanchou"
+                                             data-src="https://cdn.myanimelist.net/r/167x242/images/manga/3/259008.webp?s=f3b6549c6a609136c6dfd177d6c8b138"
+                                             data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/3/259008.webp?s=f3b6549c6a609136c6dfd177d6c8b138 1x, https://cdn.myanimelist.net/r/334x484/images/manga/3/259008.webp?s=a05d1053884cc07e910195d5696c0bae 2x"
+                                             class=" lazyloaded"
+                                             srcset="https://cdn.myanimelist.net/r/167x242/images/manga/3/259008.webp?s=f3b6549c6a609136c6dfd177d6c8b138 1x, https://cdn.myanimelist.net/r/334x484/images/manga/3/259008.webp?s=a05d1053884cc07e910195d5696c0bae 2x"
+                                             src="https://cdn.myanimelist.net/r/167x242/images/manga/3/259008.webp?s=f3b6549c6a609136c6dfd177d6c8b138">
+                                        <a href="https://myanimelist.net/manga/104953/Daibanchou" class="link-image">Daibanchou</a>
                                     </div>
 
-                                    <div class="prodsrc">
-                                        <div class="video"></div>
-                                        <div class="info">
-                                            <span class="item">Manhwa, 2017</span><span class="item publishing">Publishing</span><span
-                                                class="item">? vol, ? chp</span>
+                                    <div class="synopsis js-synopsis">
+                                        <p class="preline">Adaptation of the eroge by Alicesoft.</p>
+                                        <button class="js-toggle-text"
+                                                style="display: block; margin: 0 auto; background: none; border: none;">
+                                            <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
+                                        </button>
+
+                                        <div class="properties">
+                                            <div class="property">
+                                                <span class="caption">Authors</span><span class="item"><a
+                                                    href="/people/23851/Risa_Ebata">Ebata, Risa</a></span><span
+                                                    class="item"><a
+                                                    href="/people/26897/AliceSoft">AliceSoft</a></span><span
+                                                    class="item"><a
+                                                    href="/people/57645/Akikazu_Itou">Itou, Akikazu</a></span></div>
+                                            <div class="property">
+                                                <span class="caption">Theme</span><span class="item"><a
+                                                    href="/manga/genre/23/School" title="School">School</a></span></div>
                                         </div>
-                                        <div class="broadcast"></div>
                                     </div>
 
-                                    <div class="genres js-genre" id="153972">
-                                        <div class="genres-inner js-genre-inner"><span class="genre">
-            <a href="/manga/genre/1/Action" title="Action">Action</a>
-          </span><span class="genre">
-            <a href="/manga/genre/2/Adventure" title="Adventure">Adventure</a>
-          </span><span class="genre">
-            <a href="/manga/genre/10/Fantasy" title="Fantasy">Fantasy</a>
-          </span></div>
-                                    </div>
-                                </div>
-
-                                <div class="image">
-                                    <img width="167" height="242" alt="Dimensional Mercenary"
-                                         data-src="https://cdn.myanimelist.net/r/167x242/images/manga/2/272981.webp?s=7f83714ddb8729e4a64ae147acf60d8e"
-                                         data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/272981.webp?s=7f83714ddb8729e4a64ae147acf60d8e 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/272981.webp?s=41e32987e0fe57200851741eda12658d 2x"
-                                         class=" lazyloaded"
-                                         srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/272981.webp?s=7f83714ddb8729e4a64ae147acf60d8e 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/272981.webp?s=41e32987e0fe57200851741eda12658d 2x"
-                                         src="https://cdn.myanimelist.net/r/167x242/images/manga/2/272981.webp?s=7f83714ddb8729e4a64ae147acf60d8e">
-                                    <a href="https://myanimelist.net/manga/153972/Dimensional_Mercenary"
-                                       class="link-image">Dimensional Mercenary</a>
-                                </div>
-
-                                <div class="synopsis js-synopsis">
-                                    <p class="preline">Would you like to find a job? Even at the cost of your soul? If
-                                        so, then you've found the right place. Our job hunting advice website, SoSe, is
-                                        a site geared towards those willing to even sell their souls for employment;
-                                        that's right, people like you. Are you dealing with angels or demons?
-
-                                        30-year old freeloader Chul Ho Kang made a deal through this shady site, even
-                                        selling his soul for the chance at what else? Money! An invitation to the other
-                                        world for the weak and downtrodden of society for a chance to change their lot
-                                        in life! That is the mission given to Chul Ho Kang!
-
-                                        (Source: Kakao Entertainment Corp., translated)</p>
-                                    <button class="js-toggle-text"
-                                            style="display: block; margin: 0 auto; background: none; border: none;">
-                                        <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
-                                    </button>
-
-                                    <div class="properties">
-                                        <div class="property">
-                                            <span class="caption">Authors</span><span class="item"><a
-                                                href="/people/2265/Jae-Hwan_Kim">Kim, Jae-Hwan</a></span><span
-                                                class="item"><a href="/people/60175/Ballo">Ballo</a></span><span
-                                                class="item"><a href="/people/62420/Keumho">Keumho</a></span></div>
-                                        <div class="property">
-                                            <span class="caption">Serialization</span><span class="item"><a
-                                                href="/manga/magazine/1439/KakaoPage"
-                                                title="KakaoPage">KakaoPage</a></span></div>
-                                        <div class="property">
-                                            <span class="caption">Theme</span><span class="item"><a
-                                                href="/manga/genre/62/Isekai" title="Isekai">Isekai</a></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="information ">
-                                    <div class="information-item scormem">
-                                        <div class="scormem-container">
-                                            <div class="scormem-item score" title="Score">
-                                                <i class="fa-regular fa-star mr4"></i>N/A
-                                            </div>
-                                            <div class="scormem-item member" title="Members">
-                                                <i class="fa-solid fa-user mr4"></i>12
+                                    <div class="information ">
+                                        <div class="information-item scormem">
+                                            <div class="scormem-container">
+                                                <div class="scormem-item score" title="Score">
+                                                    <i class="fa-regular fa-star mr4"></i>N/A
+                                                </div>
+                                                <div class="scormem-item member" title="Members">
+                                                    <i class="fa-solid fa-user mr4"></i>12
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="information-item buttons">
-                                        <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
-                                           title="Quick add manga to my list"
-                                           class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
-                                                class="ga-click" data-ga-click-type="list-add-button"
-                                                data-ga-click-param="mid:153972"
-                                                style="line-height: unset;">Add to List</span></a>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="seasonal-anime js-seasonal-anime">
-                                <div>
-                                    <div class="title">
-                                        <div class="title-text">
-                                            <h2 class="h2_manga_title"><a
-                                                    href="https://myanimelist.net/manga/151229/Ougon_Bat"
-                                                    class="link-title">Ougon Bat</a></h2></div>
-                                    </div>
-
-                                    <div class="prodsrc">
-                                        <div class="video"></div>
-                                        <div class="info">
-                                            <span class="item">Manga, 1966</span><span
-                                                class="item finished">Finished</span><span
-                                                class="item">2 vol, ? chp</span>
+                                        <div class="information-item buttons">
+                                            <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
+                                               title="Quick add manga to my list"
+                                               class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
+                                                    class="ga-click" data-ga-click-type="list-add-button"
+                                                    data-ga-click-param="mid:104953"
+                                                    style="line-height: unset;">Add to List</span></a>
                                         </div>
-                                        <div class="broadcast"></div>
                                     </div>
 
-                                    <div class="genres js-genre" id="151229">
-                                        <div class="genres-inner js-genre-inner"><span class="genre">
-            <a href="/manga/genre/1/Action" title="Action">Action</a>
-          </span><span class="genre">
-            <a href="/manga/genre/37/Supernatural" title="Supernatural">Supernatural</a>
-          </span></div>
-                                    </div>
                                 </div>
-
-                                <div class="image">
-                                    <img width="167" height="242" alt="Ougon Bat"
-                                         data-src="https://cdn.myanimelist.net/r/167x242/images/manga/3/269727.webp?s=d842315e27baddabf95101ba9312d9ea"
-                                         data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/3/269727.webp?s=d842315e27baddabf95101ba9312d9ea 1x, https://cdn.myanimelist.net/r/334x484/images/manga/3/269727.webp?s=6bc724cc7877996d0f95d6ecfc905248 2x"
-                                         class=" lazyloaded"
-                                         srcset="https://cdn.myanimelist.net/r/167x242/images/manga/3/269727.webp?s=d842315e27baddabf95101ba9312d9ea 1x, https://cdn.myanimelist.net/r/334x484/images/manga/3/269727.webp?s=6bc724cc7877996d0f95d6ecfc905248 2x"
-                                         src="https://cdn.myanimelist.net/r/167x242/images/manga/3/269727.webp?s=d842315e27baddabf95101ba9312d9ea">
-                                    <a href="https://myanimelist.net/manga/151229/Ougon_Bat" class="link-image">Ougon
-                                        Bat</a>
+                                <div class="seasonal-middle">
+                                    <div class="item"></div>
+                                    <div class="item"></div>
                                 </div>
-
-                                <div class="synopsis js-synopsis">
-                                    <p class="preline">(No synopsis yet.)</p>
-                                    <button class="js-toggle-text"
-                                            style="display: block; margin: 0 auto; background: none; border: none;">
-                                        <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
-                                    </button>
-
-                                    <div class="properties">
-                                        <div class="property">
-                                            <span class="caption">Authors</span><span class="item"><a
-                                                href="/people/56321/Daiji_Kazumine">Kazumine, Daiji</a></span><span
-                                                class="item"><a href="/people/61380/Kouji_Kata">Kata, Kouji</a></span>
-                                        </div>
-                                        <div class="property">
-                                            <span class="caption">Serialization</span><span class="item"><a
-                                                href="/manga/magazine/483/Shounen_King" title="Shounen King">Shounen King</a></span>
-                                        </div>
-                                        <div class="property">
-                                            <span class="caption">Demographic</span><span class="item"><a
-                                                href="/manga/genre/27/Shounen" title="Shounen">Shounen</a></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="information ">
-                                    <div class="information-item scormem">
-                                        <div class="scormem-container">
-                                            <div class="scormem-item score" title="Score">
-                                                <i class="fa-regular fa-star mr4"></i>N/A
-                                            </div>
-                                            <div class="scormem-item member" title="Members">
-                                                <i class="fa-solid fa-user mr4"></i>12
+                                <div class="seasonal-anime js-seasonal-anime">
+                                    <div>
+                                        <div class="title">
+                                            <div class="title-text">
+                                                <h2 class="h2_manga_title"><a
+                                                        href="https://myanimelist.net/manga/148701/The_End_Enjin__The_Last_Hero_Comes_Alive"
+                                                        class="link-title">The End Enjin: The Last Hero Comes Alive</a>
+                                                </h2>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="information-item buttons">
-                                        <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
-                                           title="Quick add manga to my list"
-                                           class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
-                                                class="ga-click" data-ga-click-type="list-add-button"
-                                                data-ga-click-param="mid:151229"
-                                                style="line-height: unset;">Add to List</span></a>
-                                    </div>
-                                </div>
 
-                            </div>
-                            <div class="seasonal-middle">
-                                <div class="item"></div>
-                                <div class="item"></div>
-                            </div>
-                            <div class="seasonal-anime js-seasonal-anime">
-                                <div>
-                                    <div class="title">
-                                        <div class="title-text">
-                                            <h2 class="h2_manga_title"><a
-                                                    href="https://myanimelist.net/manga/148701/The_End_Enjin__The_Last_Hero_Comes_Alive"
-                                                    class="link-title">The End Enjin: The Last Hero Comes Alive</a></h2>
+                                        <div class="prodsrc">
+                                            <div class="video"></div>
+                                            <div class="info">
+                                                <span class="item">Manga, 2007</span><span
+                                                    class="item finished">Finished</span><span
+                                                    class="item">4 vol, 37 chp</span>
+                                            </div>
+                                            <div class="broadcast"></div>
                                         </div>
-                                    </div>
 
-                                    <div class="prodsrc">
-                                        <div class="video"></div>
-                                        <div class="info">
-                                            <span class="item">Manga, 2007</span><span
-                                                class="item finished">Finished</span><span
-                                                class="item">4 vol, 37 chp</span>
-                                        </div>
-                                        <div class="broadcast"></div>
-                                    </div>
-
-                                    <div class="genres js-genre" id="148701">
-                                        <div class="genres-inner js-genre-inner"><span class="genre">
+                                        <div class="genres js-genre" id="148701">
+                                            <div class="genres-inner js-genre-inner"><span class="genre">
             <a href="/manga/genre/1/Action" title="Action">Action</a>
           </span><span class="genre">
             <a href="/manga/genre/24/Sci-Fi" title="Sci-Fi">Sci-Fi</a>
           </span></div>
-                                    </div>
-                                </div>
-
-                                <div class="image">
-                                    <img width="167" height="242" alt="The End Enjin: The Last Hero Comes Alive"
-                                         data-src="https://cdn.myanimelist.net/r/167x242/images/manga/2/263820.webp?s=be0d1921d64dcade4810145484d16031"
-                                         data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/263820.webp?s=be0d1921d64dcade4810145484d16031 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/263820.webp?s=48320a85ffc4531e865680813c898064 2x"
-                                         class=" lazyloaded"
-                                         srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/263820.webp?s=be0d1921d64dcade4810145484d16031 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/263820.webp?s=48320a85ffc4531e865680813c898064 2x"
-                                         src="https://cdn.myanimelist.net/r/167x242/images/manga/2/263820.webp?s=be0d1921d64dcade4810145484d16031">
-                                    <a href="https://myanimelist.net/manga/148701/The_End_Enjin__The_Last_Hero_Comes_Alive"
-                                       class="link-image">The End Enjin: The Last Hero Comes Alive</a>
-                                </div>
-
-                                <div class="synopsis js-synopsis">
-                                    <p class="preline">(No synopsis yet.)</p>
-                                    <button class="js-toggle-text"
-                                            style="display: block; margin: 0 auto; background: none; border: none;">
-                                        <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
-                                    </button>
-
-                                    <div class="properties">
-                                        <div class="property">
-                                            <span class="caption">Author</span><span class="item"><a
-                                                href="/people/2780/Kenichi_Muraeda">Muraeda, Kenichi</a></span></div>
-                                        <div class="property">
-                                            <span class="caption">Serialization</span><span class="item"><a
-                                                href="/manga/magazine/1680/Hero_Cross_Line" title="Hero Cross Line">Hero Cross Line</a></span>
                                         </div>
-                                        <div class="property">
-                                            <span class="caption">Theme</span><span class="item"><a
-                                                href="/manga/genre/31/Super_Power"
-                                                title="Super Power">Super Power</a></span></div>
                                     </div>
-                                </div>
 
-                                <div class="information ">
-                                    <div class="information-item scormem">
-                                        <div class="scormem-container">
-                                            <div class="scormem-item score" title="Score">
-                                                <i class="fa-regular fa-star mr4"></i>N/A
+                                    <div class="image">
+                                        <img width="167" height="242" alt="The End Enjin: The Last Hero Comes Alive"
+                                             data-src="https://cdn.myanimelist.net/r/167x242/images/manga/2/263820.webp?s=be0d1921d64dcade4810145484d16031"
+                                             data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/263820.webp?s=be0d1921d64dcade4810145484d16031 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/263820.webp?s=48320a85ffc4531e865680813c898064 2x"
+                                             class=" lazyloaded"
+                                             srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/263820.webp?s=be0d1921d64dcade4810145484d16031 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/263820.webp?s=48320a85ffc4531e865680813c898064 2x"
+                                             src="https://cdn.myanimelist.net/r/167x242/images/manga/2/263820.webp?s=be0d1921d64dcade4810145484d16031">
+                                        <a href="https://myanimelist.net/manga/148701/The_End_Enjin__The_Last_Hero_Comes_Alive"
+                                           class="link-image">The End Enjin: The Last Hero Comes Alive</a>
+                                    </div>
+
+                                    <div class="synopsis js-synopsis">
+                                        <p class="preline">(No synopsis yet.)</p>
+                                        <button class="js-toggle-text"
+                                                style="display: block; margin: 0 auto; background: none; border: none;">
+                                            <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
+                                        </button>
+
+                                        <div class="properties">
+                                            <div class="property">
+                                                <span class="caption">Author</span><span class="item"><a
+                                                    href="/people/2780/Kenichi_Muraeda">Muraeda, Kenichi</a></span>
                                             </div>
-                                            <div class="scormem-item member" title="Members">
-                                                <i class="fa-solid fa-user mr4"></i>8
+                                            <div class="property">
+                                                <span class="caption">Serialization</span><span class="item"><a
+                                                    href="/manga/magazine/1680/Hero_Cross_Line" title="Hero Cross Line">Hero Cross Line</a></span>
+                                            </div>
+                                            <div class="property">
+                                                <span class="caption">Theme</span><span class="item"><a
+                                                    href="/manga/genre/31/Super_Power"
+                                                    title="Super Power">Super Power</a></span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="information ">
+                                        <div class="information-item scormem">
+                                            <div class="scormem-container">
+                                                <div class="scormem-item score" title="Score">
+                                                    <i class="fa-regular fa-star mr4"></i>N/A
+                                                </div>
+                                                <div class="scormem-item member" title="Members">
+                                                    <i class="fa-solid fa-user mr4"></i>8
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="information-item buttons">
-                                        <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
-                                           title="Quick add manga to my list"
-                                           class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
-                                                class="ga-click" data-ga-click-type="list-add-button"
-                                                data-ga-click-param="mid:148701"
-                                                style="line-height: unset;">Add to List</span></a>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="seasonal-anime js-seasonal-anime">
-                                <div>
-                                    <div class="title">
-                                        <div class="title-text">
-                                            <h2 class="h2_manga_title"><a
-                                                    href="https://myanimelist.net/manga/143984/Kenen"
-                                                    class="link-title">Kenen</a></h2></div>
-                                    </div>
-
-                                    <div class="prodsrc">
-                                        <div class="video"></div>
-                                        <div class="info">
-                                            <span class="item">One-shot, 2021</span><span
-                                                class="item finished">Finished</span><span
-                                                class="item">? vol, 1 chp</span>
+                                        <div class="information-item buttons">
+                                            <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
+                                               title="Quick add manga to my list"
+                                               class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
+                                                    class="ga-click" data-ga-click-type="list-add-button"
+                                                    data-ga-click-param="mid:148701"
+                                                    style="line-height: unset;">Add to List</span></a>
                                         </div>
-                                        <div class="broadcast"></div>
                                     </div>
 
-                                    <div class="genres js-genre" id="143984">
-                                        <div class="genres-inner js-genre-inner"><span class="genre">
+                                </div>
+                                <div class="seasonal-anime js-seasonal-anime">
+                                    <div>
+                                        <div class="title">
+                                            <div class="title-text">
+                                                <h2 class="h2_manga_title"><a
+                                                        href="https://myanimelist.net/manga/143984/Kenen"
+                                                        class="link-title">Kenen</a></h2></div>
+                                        </div>
+
+                                        <div class="prodsrc">
+                                            <div class="video"></div>
+                                            <div class="info">
+                                                <span class="item">One-shot, 2021</span><span
+                                                    class="item finished">Finished</span><span
+                                                    class="item">? vol, 1 chp</span>
+                                            </div>
+                                            <div class="broadcast"></div>
+                                        </div>
+
+                                        <div class="genres js-genre" id="143984">
+                                            <div class="genres-inner js-genre-inner"><span class="genre">
             <a href="/manga/genre/1/Action" title="Action">Action</a>
           </span></div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="image">
-                                    <img width="167" height="242" alt="Kenen"
-                                         data-src="https://cdn.myanimelist.net/r/167x242/images/manga/2/266707.webp?s=71b887766557b1ac96ba92f4fc5b027c"
-                                         data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/266707.webp?s=71b887766557b1ac96ba92f4fc5b027c 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/266707.webp?s=5b55e5557c356f6cdd733ae187067ff5 2x"
-                                         class=" lazyloaded"
-                                         srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/266707.webp?s=71b887766557b1ac96ba92f4fc5b027c 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/266707.webp?s=5b55e5557c356f6cdd733ae187067ff5 2x"
-                                         src="https://cdn.myanimelist.net/r/167x242/images/manga/2/266707.webp?s=71b887766557b1ac96ba92f4fc5b027c">
-                                    <a href="https://myanimelist.net/manga/143984/Kenen" class="link-image">Kenen</a>
-                                </div>
-
-                                <div class="synopsis js-synopsis">
-                                    <p class="preline">(No synopsis yet.)</p>
-                                    <button class="js-toggle-text"
-                                            style="display: block; margin: 0 auto; background: none; border: none;">
-                                        <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
-                                    </button>
-
-                                    <div class="properties">
-                                        <div class="property">
-                                            <span class="caption">Author</span><span class="item"><a
-                                                href="/people/60478/Kazumi_Yamaguchi">Yamaguchi, Kazumi</a></span></div>
-                                        <div class="property">
-                                            <span class="caption">Serialization</span><span class="item"><a
-                                                href="/manga/magazine/411/Shounen_Sunday_Super"
-                                                title="Shounen Sunday Super">Shounen Sunday Super</a></span></div>
-                                        <div class="property">
-                                            <span class="caption">Demographic</span><span class="item"><a
-                                                href="/manga/genre/27/Shounen" title="Shounen">Shounen</a></span></div>
+                                    <div class="image">
+                                        <img width="167" height="242" alt="Kenen"
+                                             data-src="https://cdn.myanimelist.net/r/167x242/images/manga/2/266707.webp?s=71b887766557b1ac96ba92f4fc5b027c"
+                                             data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/266707.webp?s=71b887766557b1ac96ba92f4fc5b027c 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/266707.webp?s=5b55e5557c356f6cdd733ae187067ff5 2x"
+                                             class=" lazyloaded"
+                                             srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/266707.webp?s=71b887766557b1ac96ba92f4fc5b027c 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/266707.webp?s=5b55e5557c356f6cdd733ae187067ff5 2x"
+                                             src="https://cdn.myanimelist.net/r/167x242/images/manga/2/266707.webp?s=71b887766557b1ac96ba92f4fc5b027c">
+                                        <a href="https://myanimelist.net/manga/143984/Kenen"
+                                           class="link-image">Kenen</a>
                                     </div>
-                                </div>
 
-                                <div class="information ">
-                                    <div class="information-item scormem">
-                                        <div class="scormem-container">
-                                            <div class="scormem-item score" title="Score">
-                                                <i class="fa-regular fa-star mr4"></i>N/A
+                                    <div class="synopsis js-synopsis">
+                                        <p class="preline">(No synopsis yet.)</p>
+                                        <button class="js-toggle-text"
+                                                style="display: block; margin: 0 auto; background: none; border: none;">
+                                            <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
+                                        </button>
+
+                                        <div class="properties">
+                                            <div class="property">
+                                                <span class="caption">Author</span><span class="item"><a
+                                                    href="/people/60478/Kazumi_Yamaguchi">Yamaguchi, Kazumi</a></span>
                                             </div>
-                                            <div class="scormem-item member" title="Members">
-                                                <i class="fa-solid fa-user mr4"></i>7
+                                            <div class="property">
+                                                <span class="caption">Serialization</span><span class="item"><a
+                                                    href="/manga/magazine/411/Shounen_Sunday_Super"
+                                                    title="Shounen Sunday Super">Shounen Sunday Super</a></span></div>
+                                            <div class="property">
+                                                <span class="caption">Demographic</span><span class="item"><a
+                                                    href="/manga/genre/27/Shounen" title="Shounen">Shounen</a></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="information-item buttons">
-                                        <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
-                                           title="Quick add manga to my list"
-                                           class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
-                                                class="ga-click" data-ga-click-type="list-add-button"
-                                                data-ga-click-param="mid:143984"
-                                                style="line-height: unset;">Add to List</span></a>
-                                    </div>
-                                </div>
 
-                            </div>
-                            <div class="seasonal-anime js-seasonal-anime">
-                                <div>
-                                    <div class="title">
-                                        <div class="title-text">
-                                            <h2 class="h2_manga_title"><a
-                                                    href="https://myanimelist.net/manga/150538/Inu_to_Yuusha_wa_Kazaranai"
-                                                    class="link-title">Inu to Yuusha wa Kazaranai</a></h2></div>
-                                    </div>
-
-                                    <div class="prodsrc">
-                                        <div class="video"></div>
-                                        <div class="info">
-                                            <span class="item">Light Novel, 2020</span><span class="item publishing">Publishing</span><span
-                                                class="item">? vol, ? chp</span>
-                                        </div>
-                                        <div class="broadcast"></div>
-                                    </div>
-
-                                    <div class="genres js-genre" id="150538">
-                                        <div class="genres-inner js-genre-inner"><span class="genre">
-            <a href="/manga/genre/1/Action" title="Action">Action</a>
-          </span><span class="genre">
-            <a href="/manga/genre/37/Supernatural" title="Supernatural">Supernatural</a>
-          </span></div>
-                                    </div>
-                                </div>
-
-                                <div class="image">
-                                    <img width="167" height="242" alt="Inu to Yuusha wa Kazaranai"
-                                         data-src="https://cdn.myanimelist.net/r/167x242/images/manga/3/267055.webp?s=2b901c5efb64c059d570d3ded6f67be5"
-                                         data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/3/267055.webp?s=2b901c5efb64c059d570d3ded6f67be5 1x, https://cdn.myanimelist.net/r/334x484/images/manga/3/267055.webp?s=9a544d46dff14714725b02f5e9b11b58 2x"
-                                         class=" lazyloaded"
-                                         srcset="https://cdn.myanimelist.net/r/167x242/images/manga/3/267055.webp?s=2b901c5efb64c059d570d3ded6f67be5 1x, https://cdn.myanimelist.net/r/334x484/images/manga/3/267055.webp?s=9a544d46dff14714725b02f5e9b11b58 2x"
-                                         src="https://cdn.myanimelist.net/r/167x242/images/manga/3/267055.webp?s=2b901c5efb64c059d570d3ded6f67be5">
-                                    <a href="https://myanimelist.net/manga/150538/Inu_to_Yuusha_wa_Kazaranai"
-                                       class="link-image">Inu to Yuusha wa Kazaranai</a>
-                                </div>
-
-                                <div class="synopsis js-synopsis">
-                                    <p class="preline">Sousuke Satou, 18 years old (elementary school graduate), was
-                                        summoned to another world, defeated the demon king, and returned to Earth for
-                                        the first time in several years. While he is unable to find a job anywhere and
-                                        lives a part-time job, he encounters a battle between a "magician" and a
-                                        "monster" who he thought did not exist on earth! Sousuke easily defeats
-                                        monsters, but that power catches the attention of others, and he ends up getting
-                                        involved in demon subjugation...?! The former strongest hero takes part in
-                                        modern, supernatural battles!!
-
-                                        (Source: Overlap, translated)</p>
-                                    <button class="js-toggle-text"
-                                            style="display: block; margin: 0 auto; background: none; border: none;">
-                                        <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
-                                    </button>
-
-                                    <div class="properties">
-                                        <div class="property">
-                                            <span class="caption">Authors</span><span class="item"><a
-                                                href="/people/3249/Suzuhito_Yasuda">Yasuda, Suzuhito</a></span><span
-                                                class="item"><a href="/people/60188/Amanattou">Amanattou</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="information ">
-                                    <div class="information-item scormem">
-                                        <div class="scormem-container">
-                                            <div class="scormem-item score" title="Score">
-                                                <i class="fa-regular fa-star mr4"></i>N/A
-                                            </div>
-                                            <div class="scormem-item member" title="Members">
-                                                <i class="fa-solid fa-user mr4"></i>6
+                                    <div class="information ">
+                                        <div class="information-item scormem">
+                                            <div class="scormem-container">
+                                                <div class="scormem-item score" title="Score">
+                                                    <i class="fa-regular fa-star mr4"></i>N/A
+                                                </div>
+                                                <div class="scormem-item member" title="Members">
+                                                    <i class="fa-solid fa-user mr4"></i>7
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="information-item buttons">
-                                        <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
-                                           title="Quick add manga to my list"
-                                           class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
-                                                class="ga-click" data-ga-click-type="list-add-button"
-                                                data-ga-click-param="mid:150538"
-                                                style="line-height: unset;">Add to List</span></a>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="seasonal-anime js-seasonal-anime">
-                                <div>
-                                    <div class="title">
-                                        <div class="title-text">
-                                            <h2 class="h2_manga_title"><a
-                                                    href="https://myanimelist.net/manga/144647/Eiyuu_Shihai_no_Dark_Lord"
-                                                    class="link-title">Eiyuu Shihai no Dark Lord</a></h2></div>
-                                    </div>
-
-                                    <div class="prodsrc">
-                                        <div class="video"></div>
-                                        <div class="info">
-                                            <span class="item">Light Novel, 2022</span><span class="item publishing">Publishing</span><span
-                                                class="item">? vol, ? chp</span>
-                                        </div>
-                                        <div class="broadcast"></div>
-                                    </div>
-
-                                    <div class="genres js-genre" id="144647">
-                                        <div class="genres-inner js-genre-inner"><span class="genre">
-            <a href="/manga/genre/1/Action" title="Action">Action</a>
-          </span><span class="genre">
-            <a href="/manga/genre/2/Adventure" title="Adventure">Adventure</a>
-          </span><span class="genre">
-            <a href="/manga/genre/10/Fantasy" title="Fantasy">Fantasy</a>
-          </span></div>
-                                    </div>
-                                </div>
-
-                                <div class="image">
-                                    <img width="167" height="242" alt="Eiyuu Shihai no Dark Lord"
-                                         data-src="https://cdn.myanimelist.net/r/167x242/images/manga/2/272737.webp?s=a494cd000e1f6d960e3d39ffcaccb34c"
-                                         data-srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/272737.webp?s=a494cd000e1f6d960e3d39ffcaccb34c 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/272737.webp?s=79c4b42a1d363a9dd6270f7b0f1e0dae 2x"
-                                         class=" lazyloaded"
-                                         srcset="https://cdn.myanimelist.net/r/167x242/images/manga/2/272737.webp?s=a494cd000e1f6d960e3d39ffcaccb34c 1x, https://cdn.myanimelist.net/r/334x484/images/manga/2/272737.webp?s=79c4b42a1d363a9dd6270f7b0f1e0dae 2x"
-                                         src="https://cdn.myanimelist.net/r/167x242/images/manga/2/272737.webp?s=a494cd000e1f6d960e3d39ffcaccb34c">
-                                    <a href="https://myanimelist.net/manga/144647/Eiyuu_Shihai_no_Dark_Lord"
-                                       class="link-image">Eiyuu Shihai no Dark Lord</a>
-                                </div>
-
-                                <div class="synopsis js-synopsis">
-                                    <p class="preline">(No synopsis yet.)</p>
-                                    <button class="js-toggle-text"
-                                            style="display: block; margin: 0 auto; background: none; border: none;">
-                                        <i class="fa-solid fa-angle-down" style="pointer-events: none;"></i>
-                                    </button>
-
-                                    <div class="properties">
-                                        <div class="property">
-                                            <span class="caption">Authors</span><span class="item"><a
-                                                href="/people/39719/Ryousuke_Hata">Hata, Ryousuke</a></span><span
-                                                class="item"><a
-                                                href="/people/55058/Saki_Mashima">Mashima, Saki</a></span></div>
-                                    </div>
-                                </div>
-
-                                <div class="information ">
-                                    <div class="information-item scormem">
-                                        <div class="scormem-container">
-                                            <div class="scormem-item score" title="Score">
-                                                <i class="fa-regular fa-star mr4"></i>N/A
-                                            </div>
-                                            <div class="scormem-item member" title="Members">
-                                                <i class="fa-solid fa-user mr4"></i>3
-                                            </div>
+                                        <div class="information-item buttons">
+                                            <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
+                                               title="Quick add manga to my list"
+                                               class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
+                                                    class="ga-click" data-ga-click-type="list-add-button"
+                                                    data-ga-click-param="mid:143984"
+                                                    style="line-height: unset;">Add to List</span></a>
                                         </div>
                                     </div>
-                                    <div class="information-item buttons">
-                                        <a href="https://myanimelist.net/login.php?error=login_required&amp;from=%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85"
-                                           title="Quick add manga to my list"
-                                           class="button_add ga-click btn-manga-watch-status js-manga-watch-status button notinmylist addtolist"><span
-                                                class="ga-click" data-ga-click-type="list-add-button"
-                                                data-ga-click-param="mid:144647"
-                                                style="line-height: unset;">Add to List</span></a>
-                                    </div>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="mt12 mb12"><!-- start pager -->
-                        <div class="pagination ac"><a class="link"
-                                                      href="https://myanimelist.net/manga/genre/1/Action?page=1">1 -
-                            100</a><span class="skip">...</span><a class="link"
-                                                                   href="https://myanimelist.net/manga/genre/1/Action?page=60">5901
-                            - 6000</a><span class="skip">...</span><a class="link"
-                                                                      href="https://myanimelist.net/manga/genre/1/Action?page=82">8101
-                            - 8200</a><a class="link" href="https://myanimelist.net/manga/genre/1/Action?page=83">8201 -
-                            8300</a><a class="link" href="https://myanimelist.net/manga/genre/1/Action?page=84">8301 -
-                            8400</a><a class="link current" href="https://myanimelist.net/manga/genre/1/Action?page=85">8401
-                            - 8476</a></div>
-                    </div><!-- end pager -->
-
                 </div>
-            </div>  <!--  control container height -->
-            <div style="clear:both;"></div>
-            <!-- end rightbody -->
-
-        </div>
-    </div>
-    <iframe name="__tcfapiLocator" style="display: none;"></iframe>
-    <div>
-        <div class="grecaptcha-badge" data-style="bottomright"
-             style="width: 256px; height: 60px; display: block; transition: right 0.3s ease 0s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px; border-radius: 2px; overflow: hidden;">
-            <div class="grecaptcha-logo">
-                <iframe title="reCAPTCHA"
-                        src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6Ld_1aIZAAAAAF6bNdR67ICKIaeXLKlbhE7t2Qz4&amp;co=aHR0cHM6Ly9teWFuaW1lbGlzdC5uZXQ6NDQz&amp;hl=pt-BR&amp;v=Km9gKuG06He-isPsP6saG8cn&amp;size=invisible&amp;cb=otk841eis7it"
-                        width="256" height="60" role="presentation" name="a-vf37sh1fz7pp" frameborder="0" scrolling="no"
-                        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe>
             </div>
-            <div class="grecaptcha-error"></div>
-            <textarea id="g-recaptcha-response-100000" name="g-recaptcha-response" class="g-recaptcha-response"
-                      style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea>
         </div>
-        <iframe style="display: none;"></iframe>
-    </div>
-    <div id="fancybox-tmp"></div>
-    <div id="fancybox-loading">
-        <div></div>
-    </div>
-    <div id="fancybox-overlay"></div>
-    <div id="fancybox-wrap">
-        <div id="fancybox-outer">
-            <div class="fancy-bg" id="fancy-bg-n"></div>
-            <div class="fancy-bg" id="fancy-bg-ne"></div>
-            <div class="fancy-bg" id="fancy-bg-e"></div>
-            <div class="fancy-bg" id="fancy-bg-se"></div>
-            <div class="fancy-bg" id="fancy-bg-s"></div>
-            <div class="fancy-bg" id="fancy-bg-sw"></div>
-            <div class="fancy-bg" id="fancy-bg-w"></div>
-            <div class="fancy-bg" id="fancy-bg-nw"></div>
-            <div id="fancybox-inner"></div>
-            <a id="fancybox-close"></a><a href="javascript:;" id="fancybox-left"><span class="fancy-ico"
-                                                                                       id="fancybox-left-ico"></span></a><a
-                href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a>
-        </div>
-    </div>
-    <iframe src="https://www.google.com/recaptcha/api2/aframe" width="0" height="0" style="display: none;"></iframe>
-    <script type="text/javascript" id="">
-        !function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","403179503706622");fbq("set","agent","tmgoogletagmanager","403179503706622");fbq("track","PageView");
-
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-                   src="https://www.facebook.com/tr?id=403179503706622&amp;ev=PageView&amp;noscript=1"></noscript>
-
-    <script type="text/javascript" id="">
-        !function(d,e,f,a,b,c){d.twq||(a=d.twq=function(){a.exe?a.exe.apply(a,arguments):a.queue.push(arguments)},a.version="1.1",a.queue=[],b=e.createElement(f),b.async=!0,b.src="//static.ads-twitter.com/uwt.js",c=e.getElementsByTagName(f)[0],c.parentNode.insertBefore(b,c))}(window,document,"script");twq("init","o2ojp");twq("track","PageView");
-
-    </script>
-    <div style="display: none; visibility: hidden;">
-        <script>
-            console.log(window.smartbanner);document.addEventListener("smartbanner.view",function(){window.dataLayer.push({event:"smartbanner_view"})});document.addEventListener("smartbanner.clickout",function(){window.dataLayer.push({event:"smartbanner_clickout"})});void 0!==window.smartbanner&&document.head.querySelector("[name\x3d'smartbanner:api'][content]");
-
-        </script>
-    </div>
-    <img src="https://t.co/i/adsct?bci=3&amp;eci=2&amp;event_id=3901297d-ba4f-477a-94e1-b6c59c9e4c79&amp;events=%5B%5B%22pageview%22%2C%7B%7D%5D%5D&amp;integration=advertiser&amp;p_id=Twitter&amp;p_user_id=0&amp;pl_id=ee49547e-8bb0-44fa-9026-a6dc3fba5806&amp;tw_document_href=https%3A%2F%2Fmyanimelist.net%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85&amp;tw_iframe_status=0&amp;tw_order_quantity=0&amp;tw_sale_amount=0&amp;txn_id=o2ojp&amp;type=javascript&amp;version=2.3.29"
-         height="1" width="1" style="display: none;"><img
-        src="https://analytics.twitter.com/i/adsct?bci=3&amp;eci=2&amp;event_id=3901297d-ba4f-477a-94e1-b6c59c9e4c79&amp;events=%5B%5B%22pageview%22%2C%7B%7D%5D%5D&amp;integration=advertiser&amp;p_id=Twitter&amp;p_user_id=0&amp;pl_id=ee49547e-8bb0-44fa-9026-a6dc3fba5806&amp;tw_document_href=https%3A%2F%2Fmyanimelist.net%2Fmanga%2Fgenre%2F1%2FAction%3Fpage%3D85&amp;tw_iframe_status=0&amp;tw_order_quantity=0&amp;tw_sale_amount=0&amp;txn_id=o2ojp&amp;type=javascript&amp;version=2.3.29"
-        height="1" width="1" style="display: none;">
 </body>
 </html>
